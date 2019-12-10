@@ -18,6 +18,7 @@
 
 using namespace std;
 
+// cookies and scrumb only need to be retrieved once
 string Stock::sCookies = "";
 string Stock::sCrumb = "";
 map<string,double> Stock::benchmark_price = map<string,double>();
@@ -137,7 +138,7 @@ void Stock::Retrieve(string whichkind)
             double dValue = 0;
             string line;
             getline(sData, line);
-            if(whichkind=="benchmark")
+            if(whichkind=="benchmark")  // if it is benchmark, get benchmark price and benchmark returns at the same time
             {
                 vector<string> temp1;
                 vector<double> temp2;
@@ -158,7 +159,7 @@ void Stock::Retrieve(string whichkind)
                     benchmark_returns[temp1[i]] = (temp2[i+1] - temp2[i])/temp2[i];
                 }
             }
-            else
+            else   // if it is stock rather than benchmark
             {
                 while ( getline(sData, line) )
                 {
@@ -176,7 +177,7 @@ void Stock::Retrieve(string whichkind)
     }
     else
     {
-            fprintf(stderr, "Curl init failed!\n");
+        fprintf(stderr, "Curl init failed!\n");
     }
 
     /* cleanup since you've used curl_easy_init */
@@ -212,6 +213,7 @@ Stock::Stock(string symbol_,string benchmark_symbol_,string start_date_,string e
 
 
 // copy constructor
+// do not use actually
 Stock::Stock(const Stock &r):symbol(r.symbol),benchmark_symbol(r.benchmark_symbol),start_date(r.start_date),end_date(r.end_date)
 {
     price = r.price;

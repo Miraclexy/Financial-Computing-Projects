@@ -6,6 +6,9 @@
 //  Copyright © 2019 Song Tang. All rights reserved.
 //
 
+/*
+ gnuplot for plot CAAR for each group.
+ */
 #ifndef gnuplot_hpp
 #define gnuplot_hpp
 

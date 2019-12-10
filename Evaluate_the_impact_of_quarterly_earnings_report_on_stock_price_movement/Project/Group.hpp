@@ -6,6 +6,16 @@
 //  Copyright © 2019 Song Tang. All rights reserved.
 //
 
+/*
+ Read EPS data from txt;
+ Put dato into map;
+ Rort stocks and divide stocks into three groups based on Surprises;
+ Do bootstrap for 30 times
+    each time:
+        pick 30 samples for each group;
+        calculated AAR and CAAR;
+    calculated average AAR, std AAR, average CAAR and std CAAR for each group
+ */
 #ifndef Group_hpp
 #define Group_hpp
 

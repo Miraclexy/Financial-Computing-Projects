@@ -34,8 +34,7 @@ string convert_time(string time)
 }
 
 
-
-
+// read data from txt
 vector<vector<string>> readfile(string filename)
 {
     ifstream file;
@@ -76,6 +75,7 @@ vector<vector<string>> readfile(string filename)
 }
 
 
+// put data into map for later benefit
 map<string,vector<string>> match(vector<vector<string>> &res)
 {
     map<string,vector<string>> mapres;
@@ -103,6 +103,7 @@ void swap(vector<string> *a,vector<string> *b)
     *b = temp;
 }
 
+// bubble sort, from small number to large number
 void bubblesort(vector<vector<string>> &v)
 {
     for(int i=0;i<v.size()-1;i++)
@@ -115,8 +116,10 @@ void bubblesort(vector<vector<string>> &v)
 }
 
 
+// divide into three groups, beat with the highest surprise, and miss with the lowest
 void get_three_groups(vector<vector<string>> allstockinfo, vector<string> &group1, vector<string> &group2, vector<string> &group3)
 {
+    // delete the headline we do not need
     vector<vector<string>> allstockinfo2;
     for(int i=1;i<allstockinfo.size();i++)
     {
@@ -141,7 +144,7 @@ void get_three_groups(vector<vector<string>> allstockinfo, vector<string> &group
         // group1 is the beat group
         group1.push_back(allstockinfo2[i][0]);  // save stock name
     }
-    // each group contains 165 stocks
+    // each group contains 165 or so stocks
 }
 
 
@@ -151,6 +154,7 @@ void get_sample(vector<string> &group,vector<string> &samplegroup)
     // randomly sorted a vector
     unsigned seed = (unsigned int)(chrono::system_clock::now ()).time_since_epoch ().count ();
     shuffle (group.begin (), group.end (), default_random_engine (seed));
+    // get first 30 stocks
     for(int i=0;i<30;i++)
     {
         samplegroup.push_back(group[i]);
@@ -168,7 +172,6 @@ vector<double> daily_AAR(vector<string> &samplegroup,map<string,Stock>&stockpool
         for(vector<string>::iterator itr=samplegroup.begin();itr!=samplegroup.end();itr++)
         {
             x += (stockpool_[*itr].get_AR()[i]);
-           if((stockpool_[*itr].get_AR()[i])>0.3) cout<<*itr<<" ";
         }
         x /= samplegroup.size();
         aar.push_back(x);
@@ -182,14 +185,14 @@ vector<double> daily_CAAR(vector<double> &aar)
 {
     vector<double> caar;
     caar.push_back(aar[0]);
-    for(int i=1;i<61;i++)    // in total 60 days
+    for(int i=1;i<61;i++)    // in total 61 days
     {
         caar.push_back(caar[i-1]+aar[i]);
     }
     return caar;
 }
 
-
+// sqrt function for vector
 vector<double> sqrt2(const vector<double>&x)
 {
     vector<double> res(x.size());
@@ -199,7 +202,6 @@ vector<double> sqrt2(const vector<double>&x)
     }
     return res;
 }
-
 
 
 vector<vector<vector<double>>> bootstrap(map<string,Stock>&stockpool_)
@@ -212,7 +214,7 @@ vector<vector<vector<double>>> bootstrap(map<string,Stock>&stockpool_)
     get_three_groups(stockdata, Beat, Meet, Miss);  // contains stock names
 
     //        avg_AAR   std_AAR   avg_CAAR   std_CAAR
-    // Beat    vector
+    // Beat  vector(61)
     // Meet      finalres is something like this
     // Miss
     // initialize finalres
@@ -241,9 +243,7 @@ vector<vector<vector<double>>> bootstrap(map<string,Stock>&stockpool_)
     vector<double> meet_std_caar(61);
     vector<double> miss_std_caar(61);
 
-    
-    
-    // 30!
+    // do bootstrap 30 times
     for(int i=0;i<30;i++)
     {
         vector<string> Beat_sample;
@@ -285,7 +285,7 @@ vector<vector<vector<double>>> bootstrap(map<string,Stock>&stockpool_)
         beatcaar.clear();meetcaar.clear();misscaar.clear();
         
         
-        cout<<i+1<<"th bootstrap finished.";
+//      cout<<i+1<<"th bootstrap finished.";
     }
 
     finalres[0][0] = beat_avg_aar/30.0;
@@ -301,13 +301,14 @@ vector<vector<vector<double>>> bootstrap(map<string,Stock>&stockpool_)
     finalres[0][3] = sqrt2(beat_std_caar/30.0 - finalres[0][2]*finalres[0][2]);
     finalres[1][3] = sqrt2(meet_std_caar/30.0 - finalres[1][2]*finalres[1][2]);
     finalres[2][3] = sqrt2(miss_std_caar/30.0 - finalres[2][2]*finalres[2][2]);
-
+    
+    cout<<"Bootstrap finished!"<<endl;
     return finalres;
 }
 
 
 
-
+// get trading days since the date shown on Yahoo Finance is just trading days
 vector<string>get_trading_days(Stock &s)
 {
     vector<string> trading_days;

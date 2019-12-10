@@ -5,7 +5,9 @@
 //  Created by Yi Xu on 2019/11/30.
 //  Copyright © 2019 Yi Xu. All rights reserved.
 //
-
+/*
+ Stock class
+ */
 #ifndef Stock_hpp
 #define Stock_hpp
 
@@ -51,9 +53,9 @@ public:
     string get_benchmark_symbol(){return benchmark_symbol;}
     string get_start_date(){return start_date;}
     string get_end_date(){return end_date;}
-    vector<double> &get_price(){return price;}
-    vector<double> &get_benchmark_ret(){return benchmark_ret;}
-    vector<double> &get_AR(){return AR;}
+    vector<double> get_price(){return price;}
+    vector<double> get_benchmark_ret(){return benchmark_ret;}
+    vector<double> get_AR(){return AR;}
 };
 
 

@@ -5,7 +5,9 @@
 //  Created by Yi Xu on 2019/12/3.
 //  Copyright © 2019 Song Tang. All rights reserved.
 //
-
+/*
+ Operator overloading to redefine +,-,*,/ for vectors
+ */
 #ifndef operator_overloading_hpp
 #define operator_overloading_hpp
 
