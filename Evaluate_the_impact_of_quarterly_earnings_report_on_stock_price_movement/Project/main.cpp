@@ -18,6 +18,13 @@ using namespace std;
 
 int main()
 {
+    /*
+    using Clock = std::chrono::system_clock;
+    using Duration = Clock::duration;
+    std::cout << Duration::period::num << " , " << Duration::period::den << '\n';
+    */
+    // this part is to test the time period of our seed to change. the result is 1/1000000 seconds. 
+    
     vector<vector<string>> epsdata;
     epsdata = readfile("EPS3.txt");     // epsdata is data from excel
     map<string,vector<string>> mapeps = match(epsdata);
@@ -61,6 +68,12 @@ int main()
                 cout<<"Estimated EPS: "<<mapeps[symbol][2]<<endl;
                 cout<<"Actual EPS: "<<mapeps[symbol][1]<<endl;
                 cout<<"Surprise: "<<mapeps[symbol][3]<<endl;
+                cout<<"Stock Prices: "<<endl;
+                for(int i=0;i<s.get_price().size();i++)
+                {
+                    cout<<s.get_price()[i]<<" ";
+                }
+                cout<<endl;
             }
             else
             {
@@ -79,7 +92,7 @@ int main()
             if(groupname=="Beat") g = 0;
             if(groupname=="Meet") g = 1;
             if(groupname=="Miss") g = 2;
-
+            
             cout<<"Average AAR: "<<endl;
             for(int k=0;k<res[g][0].size();k++)
             {

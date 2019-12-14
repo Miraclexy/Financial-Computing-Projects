@@ -93,20 +93,20 @@ mutex stockpool_m;  // mutual exclusive lock to protect write in stockpool
 void retrievedata(map<string,vector<string>> &mapeps,map<string,Stock> &stockpool,vector<string> &trading_days,int num)  // num is to divide the mission of retrieve data into 8 missions
 {
     int l,r;  // define the left and right point for each multi thread
-    if(num == 8)
+    if(num == 16)
     {
         r = int(mapeps.size());
-        l = 7*int(int(mapeps.size())/8);
+        l = 15*int(int(mapeps.size())/16);
     }
     else
     {
-        l = (num-1)*int(int(mapeps.size())/8);
-        r = num*int(int(mapeps.size())/8);
+        l = (num-1)*int(int(mapeps.size())/16);
+        r = num*int(int(mapeps.size())/16);
     }
     
     map<string,vector<string>>::iterator itr=mapeps.begin();
     int temp = l;
-    for(int i=0;i<(num-1)*int(int(mapeps.size())/8);i++) itr++;  // move itr to the right start
+    for(int i=0;i<(num-1)*int(int(mapeps.size())/16);i++) itr++;  // move itr to the right start
     for(itr=itr;itr!=mapeps.end();itr++)
     {
        if(temp == r) break;
@@ -120,6 +120,7 @@ void retrievedata(map<string,vector<string>> &mapeps,map<string,Stock> &stockpoo
 map<string,Stock> fast_retrievedata(map<string,vector<string>> &mapeps,map<string,Stock> &stockpool,vector<string> &trading_days)
 {
     // use ref to make it copyable
+    curl_global_init(CURL_GLOBAL_ALL);
     thread t1(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),1);
     thread t2(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),2);
     thread t3(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),3);
@@ -128,6 +129,14 @@ map<string,Stock> fast_retrievedata(map<string,vector<string>> &mapeps,map<strin
     thread t6(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),6);
     thread t7(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),7);
     thread t8(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),8);
+    thread t9(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),9);
+    thread t10(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),10);
+    thread t11(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),11);
+    thread t12(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),12);
+    thread t13(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),13);
+    thread t14(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),14);
+    thread t15(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),15);
+    thread t16(retrievedata,ref(mapeps),ref(stockpool),ref(trading_days),16);
     
     // make it in order
     t1.join();
@@ -138,8 +147,15 @@ map<string,Stock> fast_retrievedata(map<string,vector<string>> &mapeps,map<strin
     t6.join();
     t7.join();
     t8.join();
+    t9.join();
+    t10.join();
+    t11.join();
+    t12.join();
+    t13.join();
+    t14.join();
+    t15.join();
+    t16.join();
+    curl_global_cleanup();
     
     return stockpool;
 }
-
-

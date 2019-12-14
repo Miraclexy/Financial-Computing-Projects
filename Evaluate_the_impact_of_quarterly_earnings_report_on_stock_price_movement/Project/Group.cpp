@@ -284,7 +284,6 @@ vector<vector<vector<double>>> bootstrap(map<string,Stock>&stockpool_)
         beataar.clear();meetaar.clear();missaar.clear();
         beatcaar.clear();meetcaar.clear();misscaar.clear();
         
-        
 //      cout<<i+1<<"th bootstrap finished.";
     }
 
