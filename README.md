@@ -9,6 +9,8 @@ C++ Projects
   
       Get data from 30 days before announcement day and 30 days after announcement day to see the impact of announcement.
 
-      Calculate average of abnormal returns, std of AAR, cumulative average of abnomal returns and std of CAAR for each group. 
+      Calculate average of abnormal returns, std of AAR, cumulative average of abnormal returns and std of CAAR for each group. 
 
       Show the gnuplot graph with CAAR for all 3 groups. 
+      
+      Use multi-thread to improve the speed of program.
