@@ -5,7 +5,7 @@ C++ Projects
 
       Retrieve historical price data for all stocks of S&P500 from Yahoo Finance.
 
-      Divide stock pool into three groups(Beat, Meet, Miss) based on the suprise value(difference between estimated EPS and         actual EPS) of each stock.
+      Divide stock pool into three groups(Beat, Meet, Miss) based on the surprise value(difference between estimated EPS and         actual EPS) of each stock.
   
       Get data from 30 days before announcement day and 30 days after announcement day to see the impact of announcement.
 
