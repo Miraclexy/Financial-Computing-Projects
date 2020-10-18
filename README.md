@@ -14,3 +14,9 @@ C++ Projects
       Show the gnuplot graph with CAAR for all 3 groups. 
       
       Use multi-thread to improve the speed of program.
+
+2. Pair trading strategy and backtesting
+
+      Retrieve historical ohlc data for all stock pairs from Yahoo Finance and save them in the database.
+      
+      Execute pair trading strategy and calculate Profit and loss for each stock pair.
